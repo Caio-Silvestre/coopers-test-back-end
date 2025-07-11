@@ -4,13 +4,14 @@ import { Repository } from 'typeorm';
 import { Task } from './entities/task/task';
 import { CreateTaskDto } from './dto/create-task.dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto/update-task.dto';
+import { Request } from 'express';
 
 @Injectable()
 export class TaskService {
   constructor(@InjectRepository(Task) private repo: Repository<Task>) {}
 
-  create(dto: CreateTaskDto) {
-    const task = this.repo.create(dto);
+  async create(dto: CreateTaskDto, userId: number) {
+    const task = this.repo.create({ ...dto, user: { id: userId } });
     return this.repo.save(task);
   }
 

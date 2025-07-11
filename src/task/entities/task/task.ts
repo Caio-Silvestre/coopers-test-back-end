@@ -18,7 +18,7 @@ export class Task {
   @Column({ type: 'boolean' })
   status: boolean;
 
-  @ManyToOne(() => User, (user) => user.tasks, { eager: false })
+  @ManyToOne(() => User, (user) => user.tasks)
   @JoinColumn({ name: 'user_id' })
   user: User;
 }
